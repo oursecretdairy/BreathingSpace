@@ -1,0 +1,566 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #f1ece4;
+  color: #1f1a17;
+  font-family: "Manrope", Arial, sans-serif;
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 2px;
+}
+
+.site-header {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(360px, 2fr) minmax(250px, 1fr);
+  gap: 12px;
+  left: 0;
+  padding: 18px 20px 0;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 20;
+}
+
+.site-header a,
+.site-header p {
+  pointer-events: auto;
+}
+
+.logo {
+  align-self: start;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.7rem, 4.2vw, 3.4rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 0.88;
+  max-width: 720px;
+  text-decoration: none;
+}
+
+.logo-mark {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0;
+  margin-left: 0.35em;
+  position: relative;
+  top: -0.32em;
+  vertical-align: top;
+}
+
+.primary-nav {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-self: end;
+  padding-top: 8px;
+}
+
+.clock {
+  justify-self: center;
+  letter-spacing: 0;
+  margin: 0;
+  padding-top: 8px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.contact-top {
+  position: absolute;
+  right: 20px;
+  text-decoration: none;
+  top: 60px;
+}
+
+.primary-nav,
+.clock,
+.contact-top,
+.moment-list,
+.view-switch,
+.moment-card,
+.moment-detail,
+.moment-status,
+.about-panel {
+  font-size: 11px;
+  line-height: 1.32;
+}
+
+.page-shell {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) minmax(360px, 2fr) minmax(250px, 1fr);
+  gap: 12px;
+  min-height: 100vh;
+  padding: 18px 20px;
+}
+
+.moment-index,
+.moment-status {
+  height: calc(100vh - 36px);
+  position: sticky;
+  top: 18px;
+}
+
+.moment-list {
+  display: flex;
+  flex-direction: column;
+  margin-top: min(37vh, 15.2rem);
+  max-width: 230px;
+}
+
+.moment-list a {
+  color: rgba(31, 26, 23, 0.28);
+  text-decoration: none;
+  transition: color 180ms ease, font-weight 180ms ease, transform 180ms ease;
+}
+
+.moment-list a.is-active {
+  color: rgba(31, 26, 23, 0.9);
+  font-weight: 500;
+  transform: translateX(4px);
+}
+
+.view-switch {
+  bottom: 0;
+  color: rgba(31, 26, 23, 0.42);
+  left: 0;
+  margin: 0;
+  position: absolute;
+}
+
+.moment-stream {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 5vh 0 12vh;
+}
+
+.moment-card {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(170px, 300px) minmax(140px, 1fr) 28px;
+  gap: clamp(16px, 3vw, 42px);
+  min-height: 72vh;
+  padding: 12vh 0;
+  scroll-margin-top: 16vh;
+  transition: grid-template-columns 480ms ease, gap 480ms ease, min-height 480ms ease;
+  width: 100%;
+}
+
+.moment-card.is-expanded {
+  gap: clamp(24px, 5vw, 70px);
+  grid-template-columns: minmax(260px, 1.55fr) minmax(180px, 0.8fr) 28px;
+  min-height: 82vh;
+}
+
+.moment-card:nth-child(even) {
+  min-height: 66vh;
+}
+
+.moment-card:nth-child(3n) {
+  min-height: 78vh;
+}
+
+.moment-card.is-submission .text-visual h2 {
+  font-style: italic;
+}
+
+.moment-card.is-submission .moment-type::before {
+  content: "Submitted, ";
+}
+
+.moment-type,
+.moment-number {
+  margin: 0;
+  padding-top: 44vh;
+}
+
+.moment-number {
+  text-align: right;
+}
+
+.moment-detail {
+  align-self: start;
+  padding-top: 44vh;
+  text-align: right;
+  transition: max-width 480ms ease, padding-top 480ms ease, transform 480ms ease;
+}
+
+.moment-card.is-expanded .moment-detail {
+  grid-column: 1;
+  grid-row: 1;
+  max-width: 650px;
+  padding-top: 24vh;
+  text-align: left;
+  transform: translateX(0);
+}
+
+.moment-service {
+  margin: 0;
+}
+
+.moment-story {
+  border-top: 1px solid rgba(31, 26, 23, 0.12);
+  margin-top: 14px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  padding-top: 0;
+  text-align: left;
+  transform: translateY(18px);
+  transition: max-height 520ms ease, opacity 360ms ease, padding-top 360ms ease,
+    transform 480ms ease;
+}
+
+.moment-card.is-expanded .moment-story {
+  max-height: 1200px;
+  opacity: 1;
+  overflow-y: auto;
+  padding-top: 18px;
+  padding-right: 10px;
+  transform: translateY(0);
+}
+
+.moment-story-title {
+  color: rgba(31, 26, 23, 0.42);
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.moment-story p {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.48rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 1.16;
+  margin: 0;
+}
+
+.text-visual {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: clamp(230px, 35vw, 440px);
+  transition: margin-top 480ms ease, min-height 480ms ease, transform 480ms ease,
+    width 480ms ease;
+  width: clamp(150px, 18vw, 260px);
+}
+
+.moment-card.is-expanded .text-visual,
+.moment-card.is-expanded .text-visual.is-wide,
+.moment-card.is-expanded .text-visual.is-tall,
+.moment-card.is-expanded .text-visual.is-short,
+.moment-card.is-expanded .text-visual.is-small {
+  grid-column: 2;
+  grid-row: 1;
+  margin-top: 18vh;
+  min-height: clamp(210px, 27vw, 360px);
+  transform: translateX(18px);
+  width: clamp(160px, 18vw, 260px);
+}
+
+.text-kicker {
+  color: rgba(31, 26, 23, 0.42);
+  display: block;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.2;
+  margin-bottom: 12px;
+}
+
+.text-visual h2 {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: clamp(2.1rem, 4.4vw, 5.2rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 0.98;
+  margin: 0;
+}
+
+.moment-service {
+  color: rgba(31, 26, 23, 0.76);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.5rem;
+  line-height: 1.1;
+}
+
+.prompt-title {
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+  display: inline;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.moment-card.is-visible .prompt-title,
+.prompt-title:focus-visible {
+  text-decoration: underline;
+  text-decoration-thickness: 0.04em;
+  text-underline-offset: 0.12em;
+}
+
+.prompt-title:focus-visible {
+  outline: 1px solid rgba(0, 0, 0, 0.6);
+  outline-offset: 6px;
+}
+
+.moment-card.is-expanded .prompt-title {
+  text-decoration: underline;
+  text-decoration-thickness: 0.04em;
+  text-underline-offset: 0.12em;
+}
+
+.moment-card.is-expanded .moment-type {
+  grid-column: 1;
+  grid-row: 1;
+  padding-top: 20vh;
+}
+
+.moment-card.is-expanded .moment-number {
+  grid-column: 3;
+  grid-row: 1;
+  padding-top: 20vh;
+}
+
+.text-visual.is-wide {
+  min-height: clamp(150px, 18vw, 240px);
+  width: clamp(230px, 30vw, 400px);
+}
+
+.text-visual.is-tall {
+  min-height: clamp(310px, 43vw, 540px);
+  width: clamp(145px, 17vw, 230px);
+}
+
+.text-visual.is-short {
+  min-height: clamp(150px, 20vw, 260px);
+  width: clamp(230px, 28vw, 370px);
+}
+
+.text-visual.is-small {
+  min-height: clamp(180px, 24vw, 300px);
+  width: clamp(145px, 16vw, 220px);
+}
+
+.moment-status {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.status-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  margin: 0 0 auto;
+  padding-top: 50vh;
+}
+
+.status-number {
+  margin: 0 0 22vh;
+}
+
+.copyright {
+  color: rgba(31, 26, 23, 0.32);
+  margin: 0;
+  white-space: nowrap;
+}
+
+.about-panel {
+  display: grid;
+  gap: 18px;
+  grid-template-columns: minmax(160px, 290px);
+  justify-content: end;
+  margin: 12vh 0 4vh;
+  min-height: 40vh;
+  width: 100%;
+}
+
+.about-panel p {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-size: 1.34rem;
+  line-height: 1.16;
+  margin: 0;
+}
+
+@media (hover: hover) {
+  a:hover {
+    opacity: 0.72;
+  }
+
+  .moment-list a:hover {
+    color: rgba(31, 26, 23, 0.78);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .site-header {
+    align-items: start;
+    grid-template-columns: 1fr auto;
+    padding: 14px 12px 0;
+  }
+
+  .logo {
+    font-size: 2.45rem;
+  }
+
+  .primary-nav {
+    grid-column: 2;
+    grid-row: 1;
+    justify-content: flex-end;
+    max-width: 170px;
+    padding-top: 4px;
+  }
+
+  .clock,
+  .contact-top {
+    display: none;
+  }
+
+  .page-shell {
+    display: block;
+    padding: 148px 12px 28px;
+  }
+
+  .moment-index,
+  .moment-status {
+    height: auto;
+    position: static;
+  }
+
+  .moment-list {
+    display: grid;
+    gap: 4px 10px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 0;
+    max-width: none;
+  }
+
+  .view-switch,
+  .moment-status {
+    display: none;
+  }
+
+  .moment-stream {
+    padding: 28px 0 0;
+  }
+
+  .moment-card,
+  .moment-card:nth-child(even),
+  .moment-card:nth-child(3n) {
+    display: grid;
+    gap: 8px 12px;
+    grid-template-columns: 1fr auto;
+    min-height: auto;
+    padding: 54px 0;
+  }
+
+  .moment-card.is-expanded {
+    gap: 10px 12px;
+    grid-template-columns: 1fr auto;
+    min-height: auto;
+  }
+
+  .moment-type,
+  .moment-detail,
+  .moment-number {
+    padding-top: 0;
+  }
+
+  .moment-type {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .moment-number {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .moment-detail {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    text-align: left;
+  }
+
+  .moment-card.is-expanded .moment-detail {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    padding-top: 0;
+  }
+
+  .moment-story {
+    max-width: min(78vw, 430px);
+  }
+
+  .moment-story p {
+    font-size: 1.22rem;
+  }
+
+  .text-visual,
+  .text-visual.is-wide,
+  .text-visual.is-tall,
+  .text-visual.is-short,
+  .text-visual.is-small {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    min-height: 190px;
+    width: min(78vw, 360px);
+  }
+
+  .text-visual h2 {
+    font-size: clamp(2.8rem, 15vw, 5rem);
+  }
+
+  .moment-card.is-expanded .text-visual,
+  .moment-card.is-expanded .text-visual.is-wide,
+  .moment-card.is-expanded .text-visual.is-tall,
+  .moment-card.is-expanded .text-visual.is-short,
+  .moment-card.is-expanded .text-visual.is-small {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    margin-top: 0;
+    min-height: 190px;
+    transform: translateX(0);
+    width: min(78vw, 360px);
+  }
+
+  .moment-card.is-expanded .moment-type {
+    grid-column: 1;
+    grid-row: 1;
+    padding-top: 0;
+  }
+
+  .moment-card.is-expanded .moment-number {
+    grid-column: 2;
+    grid-row: 1;
+    padding-top: 0;
+  }
+
+  .about-panel {
+    display: block;
+    margin-top: 30px;
+    min-height: 0;
+  }
+
+  .about-panel p + p {
+    margin-top: 18px;
+  }
+}

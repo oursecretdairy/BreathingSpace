@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit | Breathing Space</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="logo" href="../homepage/homepage.html" aria-label="Breathing Space home">
+        BREATHING<span class="logo-mark">SPACE</span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <a href="../homepage/homepage.html">Archive,</a>
+        <a href="../about/index2.html">About,</a>
+        <a href="../rules/index4.html">Rules,</a>
+        <a href="#submit">Submit,</a>
+        <a href="../license/index.html">License</a>
+      </nav>
+
+      <p class="clock">LEAVE A NOTE</p>
+      <a class="contact-top" href="mailto:hello@breathingspace.site">Contact</a>
+    </header>
+
+    <main class="submit-shell" id="submit">
+      <aside class="submit-index" aria-label="Submit page index">
+        <nav>
+          <a href="#experience">Your experience</a>
+          <a href="#breath">Your breath</a>
+          <a href="#permission">Permission</a>
+        </nav>
+      </aside>
+
+      <section class="submit-main" aria-label="Submit to Breathing Space">
+        <section class="submit-hero">
+          <p class="section-kicker">Submit</p>
+          <h1>Leave your pause here.</h1>
+          <p class="lead">
+            Share one small moment before entering. Leave only what feels okay
+            to leave, in your own words.
+          </p>
+        </section>
+
+        <form class="submit-form" id="submission-form">
+          <section class="form-section" id="experience">
+            <p class="section-number">01</p>
+            <div class="section-body">
+              <p class="section-kicker">Your experience</p>
+              <h2>What was the moment right before?</h2>
+              <label>
+                Name, initials, or leave it blank
+                <input name="name" type="text" autocomplete="name" />
+              </label>
+              <label>
+                Where were you about to enter?
+                <input
+                  name="entryway"
+                  type="text"
+                  placeholder="Before a room, call, class, meeting, door..."
+                  required
+                />
+              </label>
+              <label>
+                What did that one moment feel like?
+                <textarea
+                  name="story"
+                  rows="7"
+                  placeholder="Keep it close to the breath before entering."
+                  required
+                ></textarea>
+              </label>
+            </div>
+          </section>
+
+          <section class="form-section" id="breath">
+            <p class="section-number">02</p>
+            <div class="section-body">
+              <p class="section-kicker">Your breath</p>
+              <h2>Write it in the two-line form.</h2>
+              <div class="format-block">
+                Take a breath before you ______<br />
+                You don&apos;t have to ______
+              </div>
+              <label>
+                Take a breath before you
+                <input
+                  name="breath-before"
+                  type="text"
+                  placeholder="walk in"
+                  required
+                  data-required-message="Please complete: Take a breath before you ____."
+                />
+              </label>
+              <label>
+                You don&apos;t have to
+                <input
+                  name="dont-have-to"
+                  type="text"
+                  placeholder="perform"
+                  required
+                  data-required-message="Please complete: You don't have to ____."
+                />
+              </label>
+            </div>
+          </section>
+
+          <section class="form-section" id="permission">
+            <p class="section-number">03</p>
+            <div class="section-body">
+              <p class="section-kicker">Permission</p>
+              <h2>Choose how this can be held.</h2>
+              <label>
+                If it appears, how should it be named?
+                <input name="credit" type="text" placeholder="Anonymous, initials, first name..." />
+              </label>
+              <label class="checkbox-row">
+                <input name="permission" type="checkbox" value="yes" required />
+                <span>
+                  Breathing Space can hold this in the archive, with light edits
+                  for length and clarity.
+                </span>
+              </label>
+              <button type="submit">Leave it here</button>
+              <p class="form-message" aria-live="polite"></p>
+            </div>
+          </section>
+        </form>
+      </section>
+
+      <aside class="submit-status" aria-label="Submit note">
+        <p class="side-note">
+          One moment is enough. You do not have to explain everything for it to
+          belong here.
+        </p>
+        <p class="footer-note">Held open under CC BY-NC-SA 4.0.</p>
+      </aside>
+    </main>
+    <script>
+      const STORAGE_KEY = "breathing-space-submissions";
+      const form = document.querySelector("#submission-form");
+      const message = document.querySelector(".form-message");
+      const breathBeforeInput = form.elements["breath-before"];
+      const dontHaveToInput = form.elements["dont-have-to"];
+
+      const slugify = (value) =>
+        value
+          .toLowerCase()
+          .trim()
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-|-$/g, "");
+
+      const loadSubmissions = () => {
+        try {
+          return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+        } catch {
+          return [];
+        }
+      };
+
+      [breathBeforeInput, dontHaveToInput].forEach((input) => {
+        input.addEventListener("input", () => {
+          if (input.value.trim()) {
+            input.setCustomValidity("");
+          }
+        });
+      });
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const breathBefore = formData.get("breath-before").trim();
+        const dontHaveTo = formData.get("dont-have-to").trim();
+        const entryway = formData.get("entryway").trim();
+        const story = formData.get("story").trim();
+        const credit = formData.get("credit").trim() || formData.get("name").trim();
+
+        breathBeforeInput.setCustomValidity(
+          breathBefore ? "" : breathBeforeInput.dataset.requiredMessage
+        );
+        dontHaveToInput.setCustomValidity(
+          dontHaveTo ? "" : dontHaveToInput.dataset.requiredMessage
+        );
+
+        if (!form.reportValidity()) {
+          message.textContent = "Please complete both lines of the breath before leaving it here.";
+          return;
+        }
+
+        const id = `submission-${Date.now()}-${slugify(breathBefore || entryway)}`;
+        const submissions = loadSubmissions();
+
+        submissions.push({
+          id,
+          title: `Before ${breathBefore}`,
+          entryway,
+          story,
+          breathBefore,
+          dontHaveTo,
+          credit,
+          permission: formData.get("permission") === "yes",
+          createdAt: new Date().toISOString(),
+        });
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(submissions));
+        message.textContent = "Your note has been added. Opening it now.";
+
+        window.setTimeout(() => {
+          window.location.href = `../homepage/homepage.html#${id}`;
+        }, 700);
+      });
+    </script>
+  </body>
+</html>

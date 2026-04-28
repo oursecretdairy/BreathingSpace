@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About | Breathing Space</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #ece2d8;
+        color: #1f1a17;
+        font-family: "Manrope", Arial, sans-serif;
+        margin: 0;
+      }
+
+      body::before {
+        background: rgba(31, 26, 23, 0.12);
+        bottom: 28px;
+        content: "";
+        left: calc(50% - 1px);
+        pointer-events: none;
+        position: fixed;
+        top: 18px;
+        width: 1px;
+        z-index: 1;
+      }
+
+      a {
+        color: inherit;
+        text-underline-offset: 2px;
+      }
+
+      .site-header {
+        display: grid;
+        gap: 12px;
+        grid-template-columns:
+          minmax(220px, 1fr) minmax(360px, 2fr)
+          minmax(250px, 1fr);
+        left: 0;
+        padding: 18px 20px 0;
+        pointer-events: none;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 20;
+      }
+
+      .site-header a,
+      .site-header p {
+        pointer-events: auto;
+      }
+
+      .logo {
+        align-self: start;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 3.2rem;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 0.88;
+        max-width: 720px;
+        text-decoration: none;
+      }
+
+      .logo-mark {
+        display: inline-block;
+        font-size: 0.72rem;
+        letter-spacing: 0;
+        margin-left: 0.35em;
+        position: relative;
+        top: -0.32em;
+        vertical-align: top;
+      }
+
+      .primary-nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-self: end;
+        padding-top: 8px;
+      }
+
+      .clock {
+        justify-self: center;
+        letter-spacing: 0;
+        margin: 0;
+        padding-top: 8px;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .contact-top {
+        position: absolute;
+        right: 20px;
+        text-decoration: none;
+        top: 60px;
+      }
+
+      .primary-nav,
+      .clock,
+      .contact-top,
+      .section-kicker,
+      .section-index,
+      .section-body,
+      .side-note,
+      .open-list,
+      .footer-note {
+        font-size: 11px;
+        line-height: 1.36;
+      }
+
+      .page-shell {
+        display: grid;
+        gap: 12px;
+        grid-template-columns:
+          minmax(220px, 1fr) minmax(360px, 2fr)
+          minmax(250px, 1fr);
+        min-height: 100vh;
+        padding: 18px 20px 28px;
+      }
+
+      .about-index,
+      .about-status {
+        height: calc(100vh - 46px);
+        position: sticky;
+        top: 18px;
+      }
+
+      .about-index {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .about-index nav {
+        display: flex;
+        flex-direction: column;
+        max-width: 230px;
+      }
+
+      .about-index a {
+        color: rgba(31, 26, 23, 0.34);
+        text-decoration: none;
+      }
+
+      .about-status {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        text-align: right;
+      }
+
+      .side-note,
+      .footer-note {
+        color: rgba(31, 26, 23, 0.5);
+        margin: 0;
+      }
+
+      .side-note {
+        margin-bottom: 22vh;
+        max-width: 230px;
+      }
+
+      .about-main {
+        padding: 29vh 0 12vh;
+        position: relative;
+        z-index: 2;
+      }
+
+      .intro {
+        min-height: 58vh;
+        opacity: 0;
+        transform: translateX(-24px);
+        transition: opacity 700ms ease, transform 700ms ease;
+      }
+
+      .intro.is-open {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      h1 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 8.4rem;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 0.96;
+        margin: 0 0 26px;
+        max-width: 780px;
+      }
+
+      .lead {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.95rem;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 1.16;
+        margin: 0;
+        max-width: 610px;
+      }
+
+      .about-section {
+        display: grid;
+        gap: 34px;
+        grid-template-columns: minmax(70px, 0.6fr) minmax(250px, 1.4fr);
+        min-height: 46vh;
+        opacity: 0.36;
+        padding: 12vh 0;
+        position: relative;
+        transform: translateX(-18px);
+        transition: opacity 650ms ease, transform 650ms ease;
+      }
+
+      .about-section::before {
+        background: #1f1a17;
+        content: "";
+        height: 1px;
+        left: calc(33.333% + 34px);
+        opacity: 0;
+        position: absolute;
+        top: 12vh;
+        transform: scaleX(0);
+        transform-origin: left center;
+        transition: opacity 650ms ease, transform 650ms ease;
+        width: min(120px, 28%);
+      }
+
+      .about-section.is-open {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .about-section.is-open::before {
+        opacity: 0.42;
+        transform: scaleX(1);
+      }
+
+      .section-index,
+      .section-kicker {
+        margin: 0;
+      }
+
+      .section-kicker {
+        color: rgba(31, 26, 23, 0.42);
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 3.35rem;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 0.98;
+        margin: 0 0 24px;
+      }
+
+      .section-body {
+        max-width: 610px;
+      }
+
+      .section-body p {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.62rem;
+        line-height: 1.18;
+        margin: 0;
+      }
+
+      .section-body p + p {
+        margin-top: 14px;
+      }
+
+      .open-list {
+        counter-reset: item;
+        list-style: none;
+        margin: 20px 0 0;
+        padding: 0;
+      }
+
+      .open-list li {
+        border-top: 1px solid rgba(31, 26, 23, 0.12);
+        display: grid;
+        gap: 14px;
+        grid-template-columns: 42px 1fr;
+        padding: 14px 0;
+      }
+
+      .open-list li::before {
+        color: rgba(31, 26, 23, 0.38);
+        content: counter(item, decimal-leading-zero);
+        counter-increment: item;
+        font-weight: 600;
+      }
+
+      .open-list strong {
+        display: block;
+        font-size: 1rem;
+        letter-spacing: 0;
+        line-height: 1.05;
+        margin-bottom: 5px;
+      }
+
+      .closing {
+        align-items: end;
+        display: grid;
+        min-height: 44vh;
+        opacity: 0;
+        transform: translateX(-18px);
+        transition: opacity 700ms ease, transform 700ms ease;
+      }
+
+      .closing.is-open {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .closing p {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 4.6rem;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 0.98;
+        margin: 0;
+        max-width: 760px;
+      }
+
+      @media (hover: hover) {
+        a:hover {
+          opacity: 0.72;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .site-header {
+          align-items: start;
+          grid-template-columns: 1fr auto;
+          padding: 14px 12px 0;
+        }
+
+        .logo {
+          font-size: 2.45rem;
+        }
+
+        .logo-mark {
+          font-size: 0.68rem;
+        }
+
+        .primary-nav {
+          grid-column: 2;
+          grid-row: 1;
+          justify-content: flex-end;
+          max-width: 170px;
+          padding-top: 4px;
+        }
+
+        .clock,
+        .contact-top,
+        .about-index,
+        .about-status {
+          display: none;
+        }
+
+        body::before {
+          bottom: 18px;
+          left: 12px;
+          top: 128px;
+        }
+
+        .page-shell {
+          display: block;
+          padding: 148px 12px 28px;
+        }
+
+        .about-main {
+          padding: 0;
+        }
+
+        .intro {
+          min-height: 46vh;
+        }
+
+        h1 {
+          font-size: 4rem;
+        }
+
+        .about-section {
+          display: block;
+          min-height: 0;
+          padding: 54px 0;
+          transform: translateX(0);
+        }
+
+        .intro,
+        .closing {
+          transform: translateX(0);
+        }
+
+        .about-section::before {
+          left: 0;
+          top: 42px;
+          width: 72px;
+        }
+
+        .section-index,
+        .section-kicker {
+          margin-bottom: 10px;
+        }
+
+        h2 {
+          font-size: 2.35rem;
+        }
+
+        .open-list li {
+          grid-template-columns: 34px 1fr;
+        }
+      }
+
+      @media (min-width: 1200px) {
+        .logo {
+          font-size: 3.8rem;
+        }
+
+        .logo-mark {
+          font-size: 0.78rem;
+        }
+
+        h1 {
+          font-size: 9.8rem;
+        }
+
+        h2 {
+          font-size: 3.9rem;
+        }
+
+        .closing p {
+          font-size: 5.2rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        .intro,
+        .about-section,
+        .about-section::before,
+        .closing {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="logo" href="../homepage/homepage.html" aria-label="Breathing Space home">
+        BREATHING<span class="logo-mark">SPACE</span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <a href="../homepage/homepage.html">Archive,</a>
+        <a href="#about">About,</a>
+        <a href="../rules/index4.html">Rules,</a>
+        <a href="../submit/index5.html">Submit,</a>
+        <a href="../license/index.html">License</a>
+      </nav>
+
+      <p class="clock">ABOUT THE Breathing Space</p>
+      <a class="contact-top" href="mailto:hello@breathingspace.site">Contact</a>
+    </header>
+
+    <main class="page-shell" id="about">
+      <aside class="about-index" aria-label="About page index">
+        <nav>
+          <a href="#purpose">What this is about</a>
+          <a href="#door">Why a door</a>
+          <a href="#why-open">Why open object</a>
+          <a href="#what-open">What part is open</a>
+        </nav>
+      </aside>
+
+      <section class="about-main" aria-label="About Breathing Space">
+        <section class="intro threshold-item">
+          <h1>About Breathing Space</h1>
+          <p class="lead">
+            A public pause for the private moments when we feel watched,
+            rushed, uncertain, or not ready yet.
+          </p>
+        </section>
+
+        <section class="about-section threshold-item" id="purpose">
+          <p class="section-index">01</p>
+          <div class="section-body">
+            <p class="section-kicker">What this is about</p>
+            <h2>Giving language to the moment before the moment.</h2>
+            <p>
+              Breathing Space is a growing collection of short prompts for
+              common inner-pressure points: before speaking, before asking,
+              before entering a room, before replying, before starting, and
+              before leaving.
+            </p>
+            <p>
+              It names a pause, gives that pause a sentence, and
+              lets someone return to themselves before they perform certainty
+              for the room.
+            </p>
+          </div>
+        </section>
+
+        <section class="about-section threshold-item" id="door">
+          <p class="section-index">02</p>
+          <div class="section-body">
+            <p class="section-kicker">Why a door?</p>
+            <h2>A door is the moment before something begins.</h2>
+            <p>
+              Before you enter a room, start a conversation, or move forward,
+              there is a brief pause. That moment often carries pressure,
+              expectation, or hesitation.
+            </p>
+            <p>
+              This project focuses on that space. The breather happens right
+              there, before crossing.
+            </p>
+            <p>
+              I have often felt anxious right before entering a space: before
+              speaking, walking into a room, or starting something. In those
+              moments, I needed a second to pause and breathe before continuing.
+            </p>
+            <p>
+              I wanted to create a space that acknowledges this feeling and
+              makes it visible, so you can know you are not the only one who
+              experiences it.
+            </p>
+            <p>
+              The door represents that exact moment: the point right before
+              entering. This system gives structure to that pause, allowing
+              people to recognize what they are feeling, reframe it, and move
+              forward.
+            </p>
+            <p>
+              It is not just something that exists on this site, but something
+              that can be practiced anywhere, in any form.
+            </p>
+          </div>
+        </section>
+
+        <section class="about-section threshold-item" id="why-open">
+          <p class="section-index">03</p>
+          <div class="section-body">
+            <p class="section-kicker">Why this is an open object</p>
+            <h2>Because the pause is not finished by one author.</h2>
+            <p>
+              Breathing Space is an open object because its subject is shared:
+              hesitation, pressure, self-monitoring, and the wish to arrive
+              without performing. Those experiences change across people,
+              places, bodies, languages, and contexts.
+            </p>
+            <p>
+              Calling it open means the work can keep receiving new moments,
+              new wording, and new forms of use. It is not a closed campaign or
+              a final set of rules. It is a living object that becomes more
+              accurate when people notice where they need space.
+            </p>
+          </div>
+        </section>
+
+        <section class="about-section threshold-item" id="what-open">
+          <p class="section-index">04</p>
+          <div class="section-body">
+            <p class="section-kicker">What part of it is open</p>
+            <h2>The structure is held. The contents can breathe.</h2>
+            <ol class="open-list">
+              <li>
+                <span>
+                  <strong>The moments are open.</strong>
+                  New situations can be added when they reveal another kind of
+                  social, emotional, or creative pressure.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <strong>The language is open.</strong>
+                  Each prompt can be refined so it feels more honest, direct,
+                  and usable in the body.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <strong>The sequence is open.</strong>
+                  The order can change as the collection discovers better
+                  relationships between the moments.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <strong>The form is open.</strong>
+                  The project can become a website, printed card, installation,
+                  workshop prompt, audio pause, or shared ritual.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <strong>The care is not open for extraction.</strong>
+                  Personal stories, private context, and emotional boundaries
+                  stay protected. The project can be contributed to without
+                  turning vulnerability into material.
+                </span>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="closing threshold-item" aria-label="Closing statement">
+          <p>
+            It stays open so the pause can keep meeting people where they
+            actually are.
+          </p>
+        </section>
+      </section>
+
+      <aside class="about-status" aria-label="About page note">
+        <p class="side-note">
+          An open object is held enough to recognize, and unfinished enough to
+          receive.
+        </p>
+        <p class="footer-note">Some rights reserved under CC BY-NC-SA 4.0.</p>
+      </aside>
+    </main>
+    <script>
+      const thresholdItems = document.querySelectorAll(".threshold-item");
+
+      const openItem = (item) => {
+        item.classList.add("is-open");
+      };
+
+      if ("IntersectionObserver" in window) {
+        const thresholdObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                openItem(entry.target);
+              }
+            });
+          },
+          {
+            rootMargin: "-18% 0px -18% 0px",
+            threshold: 0.12,
+          }
+        );
+
+        thresholdItems.forEach((item) => thresholdObserver.observe(item));
+      } else {
+        thresholdItems.forEach(openItem);
+      }
+    </script>
+  </body>
+</html>

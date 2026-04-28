@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rules | Breathing Space</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Manrope:wght@300;400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        background: #f1ece4;
+        color: #1f1a17;
+        font-family: "Manrope", Arial, sans-serif;
+        margin: 0;
+      }
+
+      body::before {
+        background: rgba(31, 26, 23, 0.12);
+        bottom: 28px;
+        content: "";
+        left: calc(50% - 1px);
+        pointer-events: none;
+        position: fixed;
+        top: 18px;
+        width: 1px;
+        z-index: 1;
+      }
+
+      a {
+        color: inherit;
+        text-underline-offset: 2px;
+      }
+
+      .site-header {
+        display: grid;
+        gap: 12px;
+        grid-template-columns:
+          minmax(220px, 1fr) minmax(360px, 2fr)
+          minmax(250px, 1fr);
+        left: 0;
+        padding: 18px 20px 0;
+        pointer-events: none;
+        position: fixed;
+        right: 0;
+        top: 0;
+        z-index: 20;
+      }
+
+      .site-header a,
+      .site-header p {
+        pointer-events: auto;
+      }
+
+      .logo {
+        align-self: start;
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 3.2rem;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 0.88;
+        max-width: 720px;
+        text-decoration: none;
+      }
+
+      .logo-mark {
+        display: inline-block;
+        font-size: 0.72rem;
+        letter-spacing: 0;
+        margin-left: 0.35em;
+        position: relative;
+        top: -0.32em;
+        vertical-align: top;
+      }
+
+      .primary-nav {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        justify-self: end;
+        padding-top: 8px;
+      }
+
+      .clock {
+        justify-self: center;
+        letter-spacing: 0;
+        margin: 0;
+        padding-top: 8px;
+        text-align: center;
+        white-space: nowrap;
+      }
+
+      .contact-top {
+        position: absolute;
+        right: 20px;
+        text-decoration: none;
+        top: 60px;
+      }
+
+      .primary-nav,
+      .clock,
+      .contact-top,
+      .rules-index,
+      .rules-status,
+      .section-kicker,
+      .rule-list,
+      .format-block,
+      .footer-note {
+        font-size: 11px;
+        line-height: 1.36;
+      }
+
+      .rules-shell {
+        display: grid;
+        gap: 12px;
+        grid-template-columns:
+          minmax(220px, 1fr) minmax(360px, 2fr)
+          minmax(250px, 1fr);
+        min-height: 100vh;
+        padding: 18px 20px 28px;
+      }
+
+      .rules-index,
+      .rules-status {
+        height: calc(100vh - 46px);
+        position: sticky;
+        top: 18px;
+        z-index: 2;
+      }
+
+      .rules-index {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .rules-index nav {
+        display: flex;
+        flex-direction: column;
+        max-width: 230px;
+      }
+
+      .rules-index a {
+        color: rgba(31, 26, 23, 0.34);
+        text-decoration: none;
+      }
+
+      .rules-status {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        text-align: right;
+      }
+
+      .rules-main {
+        padding: 29vh 0 12vh;
+        position: relative;
+        z-index: 2;
+      }
+
+      .rules-hero {
+        min-height: 58vh;
+      }
+
+      .section-kicker {
+        color: rgba(31, 26, 23, 0.42);
+        font-weight: 500;
+        margin: 0 0 10px;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2 {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-weight: 600;
+        letter-spacing: 0;
+        line-height: 0.96;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: 8.4rem;
+        max-width: 780px;
+      }
+
+      h2 {
+        font-size: 3.35rem;
+        margin-bottom: 24px;
+      }
+
+      .lead {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.95rem;
+        font-weight: 500;
+        line-height: 1.16;
+        margin: 26px 0 0;
+        max-width: 610px;
+      }
+
+      .rules-section {
+        display: grid;
+        gap: 34px;
+        grid-template-columns: minmax(70px, 0.6fr) minmax(250px, 1.4fr);
+        min-height: 46vh;
+        padding: 12vh 0;
+      }
+
+      .section-number {
+        color: rgba(31, 26, 23, 0.42);
+        font-size: 11px;
+        font-weight: 600;
+        margin: 0;
+      }
+
+      .section-body {
+        max-width: 610px;
+      }
+
+      .section-body p {
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.62rem;
+        line-height: 1.18;
+        margin: 0;
+      }
+
+      .section-body p + p {
+        margin-top: 14px;
+      }
+
+      .format-block {
+        border-top: 1px solid rgba(31, 26, 23, 0.12);
+        font-family: "Cormorant Garamond", Georgia, serif;
+        font-size: 1.62rem;
+        font-weight: 500;
+        line-height: 1.18;
+        margin: 24px 0;
+        padding-top: 18px;
+      }
+
+      .tool-links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 28px;
+      }
+
+      .tool-link {
+        border: 1px solid rgba(31, 26, 23, 0.16);
+        border-radius: 999px;
+        padding: 10px 14px;
+        text-decoration: none;
+      }
+
+      .tool-link:hover {
+        background: rgba(255, 255, 255, 0.34);
+        opacity: 1;
+      }
+
+      .rule-list {
+        counter-reset: item;
+        list-style: none;
+        margin: 20px 0 0;
+        padding: 0;
+      }
+
+      .rule-list li {
+        border-top: 1px solid rgba(31, 26, 23, 0.12);
+        display: grid;
+        gap: 14px;
+        grid-template-columns: 42px 1fr;
+        padding: 14px 0;
+      }
+
+      .rule-list li::before {
+        color: rgba(31, 26, 23, 0.38);
+        content: counter(item, decimal-leading-zero);
+        counter-increment: item;
+        font-weight: 600;
+      }
+
+      .rule-list strong {
+        display: block;
+        font-size: 1rem;
+        line-height: 1.05;
+        margin-bottom: 5px;
+      }
+
+      .side-note,
+      .footer-note {
+        color: rgba(31, 26, 23, 0.5);
+        margin: 0;
+      }
+
+      .side-note {
+        margin-bottom: 22vh;
+        max-width: 230px;
+      }
+
+      @media (hover: hover) {
+        a:hover {
+          opacity: 0.72;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .site-header {
+          align-items: start;
+          grid-template-columns: 1fr auto;
+          padding: 14px 12px 0;
+        }
+
+        .logo {
+          font-size: 2.45rem;
+        }
+
+        .logo-mark {
+          font-size: 0.68rem;
+        }
+
+        .primary-nav {
+          grid-column: 2;
+          grid-row: 1;
+          justify-content: flex-end;
+          max-width: 170px;
+          padding-top: 4px;
+        }
+
+        .clock,
+        .contact-top,
+        .rules-index,
+        .rules-status {
+          display: none;
+        }
+
+        body::before {
+          bottom: 18px;
+          left: 12px;
+          top: 128px;
+        }
+
+        .rules-shell {
+          display: block;
+          padding: 148px 12px 28px;
+        }
+
+        .rules-main {
+          padding: 0;
+        }
+
+        .rules-hero {
+          min-height: 46vh;
+        }
+
+        h1 {
+          font-size: 4rem;
+        }
+
+        h2 {
+          font-size: 2.35rem;
+        }
+
+        .lead,
+        .format-block {
+          font-size: 1.45rem;
+        }
+
+        .rules-section {
+          display: block;
+          min-height: 0;
+          padding: 54px 0;
+        }
+
+        .section-number,
+        .section-kicker {
+          margin-bottom: 10px;
+        }
+
+        .rule-list li {
+          grid-template-columns: 34px 1fr;
+        }
+      }
+
+      @media (min-width: 1200px) {
+        .logo {
+          font-size: 3.8rem;
+        }
+
+        .logo-mark {
+          font-size: 0.78rem;
+        }
+
+        h1 {
+          font-size: 9.8rem;
+        }
+
+        h2 {
+          font-size: 3.9rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="logo" href="../homepage/homepage.html" aria-label="Breathing Space home">
+        BREATHING<span class="logo-mark">SPACE</span>
+      </a>
+
+      <nav class="primary-nav" aria-label="Primary navigation">
+        <a href="../homepage/homepage.html">Archive,</a>
+        <a href="../about/index2.html">About,</a>
+        <a href="#rules">Rules,</a>
+        <a href="../submit/index5.html">Submit,</a>
+        <a href="../license/index.html">License</a>
+      </nav>
+
+      <p class="clock">A FORM YOU CAN CARRY</p>
+      <a class="contact-top" href="mailto:hello@breathingspace.site">Contact</a>
+    </header>
+
+    <main class="rules-shell" id="rules">
+      <aside class="rules-index" aria-label="Rules index">
+        <nav>
+          <a href="#make">Make this your own</a>
+          <a href="#submit">Submission rules</a>
+          <a href="#fork">Fork the system</a>
+          <a href="#door-kit">Door kit</a>
+        </nav>
+      </aside>
+
+      <section class="rules-main" aria-label="Breathing Space rules">
+        <section class="rules-hero" id="make">
+          <p class="section-kicker">Make this your own</p>
+          <h1>This doesn&apos;t have to stay here.</h1>
+          <p class="lead">
+            You can take this structure anywhere. It can live in a note, on
+            your phone, or in the small second before a door opens.
+          </p>
+        </section>
+
+        <section class="rules-section" id="submit">
+          <p class="section-number">01</p>
+          <div class="section-body">
+            <p class="section-kicker">The form</p>
+            <h2>Use the two-line breath.</h2>
+            <div class="format-block">
+              Take a breath before you ______<br />
+              You don&apos;t have to ______
+            </div>
+            <ol class="rule-list">
+              <li>
+                <span>
+                  <strong>Start right before entering.</strong>
+                  Begin at the moment before going into some place, room, or
+                  entryway.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <strong>Keep it about one moment.</strong>
+                  Do not make it general. Do not turn it into a whole story.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <strong>Follow the format.</strong>
+                  Keep the breath in two lines so it stays small enough to use.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <strong>Keep it short.</strong>
+                  Let the sentence be something someone can carry with them.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <strong>Keep it or leave it anywhere.</strong>
+                  You can hold onto it, place it somewhere, or pass it on.
+                </span>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="rules-section" id="fork">
+          <p class="section-number">02</p>
+          <div class="section-body">
+            <p class="section-kicker">Forkable object</p>
+            <h2>The project grows through interpretation.</h2>
+            <p>
+              The project grows through how you interpret it and share it. A
+              fork can belong to another room, group, language, hallway, class,
+              neighborhood, website, note, or doorway.
+            </p>
+            <ol class="rule-list">
+              <li>
+                <span>
+                  <strong>Take the frame.</strong>
+                  Keep the breath structure, but let the setting change.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <strong>Name your threshold.</strong>
+                  Decide where the pause begins and who might need it there.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <strong>Change the pressure.</strong>
+                  Fill the blank with the thing people feel they have to do:
+                  perform, explain, impress, belong, answer, or prove.
+                </span>
+              </li>
+              <li>
+                <span>
+                  <strong>Share without closing it.</strong>
+                  Let other people adapt the system again instead of treating
+                  your version as the final one.
+                </span>
+              </li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="rules-section" id="door-kit">
+          <p class="section-number">03</p>
+          <div class="section-body">
+            <p class="section-kicker">Door kit</p>
+            <h2>Take the instructions into the real world.</h2>
+            <p>
+              Download a one-page Breathing Space sheet for a door, hallway,
+              classroom, studio, or shared room. It gives someone the prompt,
+              the rules, and a small invitation to leave a pause where they are.
+            </p>
+            <p>
+              Print it, tape it up, or leave copies nearby so the system can
+              keep living outside the site.
+            </p>
+            <div class="tool-links">
+              <a
+                class="tool-link"
+                href="door-manual.html"
+                download="breathing-space-door-manual.html"
+              >
+                Download the door sheet
+              </a>
+              <a class="tool-link" href="door-manual.html" target="_blank" rel="noopener">
+                Open print version
+              </a>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <aside class="rules-status" aria-label="Rules note">
+        <p class="side-note">
+          Let the structure travel from the site to a real door, then let other
+          people answer it there.
+        </p>
+        <p class="footer-note">Held open under CC BY-NC-SA 4.0.</p>
+      </aside>
+    </main>
+  </body>
+</html>
